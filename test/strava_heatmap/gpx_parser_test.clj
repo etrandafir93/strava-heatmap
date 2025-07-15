@@ -9,27 +9,26 @@
   (testing "parse square.gpx and verify longitude"
     (is (=
       [26.0 26.001 26.001 26.0]
-      (map (fn [it] (:longitude it))
+      (map :longitude
         (gpx/file-to-trkpts "resources/square.gpx"))))))
 
 (deftest parsing-latitude
   (testing "parse square.gpx and verify latitude"
     (is (=
       [44.0 44.0 44.001 44.001]
-      (map (fn [it] (:latitude it))
+      (map :latitude
         (gpx/file-to-trkpts "resources/square.gpx"))))))
   
 (deftest parsing-cadence
   (testing "parse square.gpx and verify cadence"
     (is (=
       [80 85 90 95]
-      (map (fn [it] (:cadence it))
+      (map :cadence
         (gpx/file-to-trkpts "resources/square.gpx"))))))
-
 
 (deftest parsing-time
   (testing "parse square.gpx and verify time"
     (is (=
       (to-instant ["2025-07-11T16:49:57Z" "2025-07-11T16:50:00Z" "2025-07-11T16:50:03Z" "2025-07-11T16:50:06Z"])
-      (map (fn [it] (:time it))
+      (map :time
         (gpx/file-to-trkpts "resources/square.gpx"))))))

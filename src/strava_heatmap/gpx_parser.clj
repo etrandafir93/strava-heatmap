@@ -27,6 +27,5 @@
 
 (defn pretty-print-gpx [file]
   (println 
-    (map
-      (fn [it] (:longitude it))
+    (map :longitude
       (file-to-trkpts file)))) 
