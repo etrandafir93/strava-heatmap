@@ -15,8 +15,8 @@
   (let [valid-element (re-seq (trkpt-element-pattern) xml-string)]
     (mapv (fn [[_ latitude longitude time cadence]]
         (->TrackPoint 
-          (Double/parseDouble latitude) 
-          (Double/parseDouble longitude) 
+          (bigdec latitude) 
+          (bigdec longitude) 
           (java.time.Instant/parse time)
           (Integer/parseInt cadence)))
       valid-element)))

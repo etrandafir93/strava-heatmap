@@ -8,14 +8,14 @@
 (deftest parsing-longitude
   (testing "parse square.gpx and verify longitude"
     (is (=
-      [26.0 26.001 26.001 26.0]
+      (map bigdec [26.0 26.001 26.001 26.0])
       (map :longitude
         (gpx/file-to-trkpts "resources/square.gpx"))))))
 
 (deftest parsing-latitude
   (testing "parse square.gpx and verify latitude"
     (is (=
-      [44.0 44.0 44.001 44.001]
+      (map bigdec [44.0 44.0 44.001 44.001])
       (map :latitude
         (gpx/file-to-trkpts "resources/square.gpx"))))))
   
