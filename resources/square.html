@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Heatmap</title>
+  <style>
+    .heatmap {
+      display: grid;
+      grid-template-columns: repeat(100, 10px);
+      gap: 2px;
+    }
+
+    .cell {
+      width: 10px;
+      height: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: white;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<div id="heatmap" class="heatmap"></div>
+
+<script>
+    const heatmap = [{"x":0,"y":0,"color":"rgb(0, 255, 0)"},{"x":100,"y":0,"color":"rgb(0, 255, 0)"},{"x":100,"y":100,"color":"rgb(0, 255, 0)"},{"x":0,"y":100,"color":"rgb(0, 255, 0)"}];
+
+    const container = document.getElementById('heatmap');
+
+    const height = 100;
+    const width = 100;
+
+    const maxX = Math.max(...heatmap.map(point => point.x));
+    const maxY = Math.max(...heatmap.map(point => point.y));
+    
+    for (let x = 0; x < height; x++) {
+        for (let y = 0; y < width; y++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.style.backgroundColor = getColor(x, y); 
+            container.appendChild(cell);
+        }
+    }
+
+    function getColor(x, y) {
+        const point = heatmap.find(point => point.x === x && point.y === y);
+        return point ? point.color : 'rgb(0, 0, 0)';
+    }
+
+</script>
+
+</body>
+</html>

@@ -20,3 +20,26 @@
            (update acc [(:x pt) (:y pt)] (fn [current-val] (inc (or current-val 0)))))
          {}
          normalized-trkpts))
+
+(defn map-to-rgb [matrix]
+  (let [values (vals matrix)
+        min-val (apply min values)
+        max-val (apply max values)
+        diff (if (= min-val max-val) 1 (- max-val min-val))]
+    (into {} 
+       (map (fn [[coords value]]
+              [coords 
+               (let [percent (/ (- value min-val) diff)
+                     r (int (* 255 percent))
+                     g (int (* 255 (- 1 percent)))
+                     b 0]
+                   (format "rgb(%d, %d, %d)" r g b))]))
+            matrix)))
+
+(defn map-to-json [heatmap-rgb]
+  (str "["
+       (clojure.string/join ","
+         (map (fn [[[x y] color]]
+                (str "{\"x\":" x ",\"y\":" y ",\"color\":\"" color "\"}"))
+              heatmap-rgb))
+       "]"))
