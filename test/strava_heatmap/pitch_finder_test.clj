@@ -4,72 +4,34 @@
 
 (def dummy-trkpts
   [{
-    :latitude (bigdec 44.0)
-    :longitude (bigdec 26.0)
-    :time (java.time.Instant/parse "2025-07-11T16:49:57Z")
-    :cadence 80
+    :latitude 44.0M
+    :longitude 26.0M
+    ;; ommitting time and cadence for simplicity
+    ;; :time (java.time.Instant/parse "2025-07-11T16:49:57Z")
+    ;; :cadence 80
   },
-  { 
-    :latitude (bigdec 44.1)
-    :longitude (bigdec 26.0)
-    :time (java.time.Instant/parse "2025-07-11T16:49:57Z")
-    :cadence 80
-  },
-  { 
-    :latitude (bigdec 44.0)
-    :longitude (bigdec 26.0)
-    :time (java.time.Instant/parse "2025-07-11T16:49:57Z")
-    :cadence 80
-  },
-  { 
-    :latitude (bigdec 44.0)
-    :longitude (bigdec 26.1)
-    :time (java.time.Instant/parse "2025-07-11T16:49:57Z")
-    :cadence 80
-  }])
+  { :latitude 44.1M :longitude 26.0M },
+  { :latitude 44.0M :longitude 26.0M },
+  { :latitude 44.0M :longitude 26.1M }])
 
 (deftest test-pitch-location
   (testing "should return correct extremities"
     (let [extremities (pitch/extreme-points dummy-trkpts)]
-      (is (=
-        (bigdec 44.1)
-        (:north extremities)))
-      (is (=
-        (bigdec 44.0)
-        (:south extremities)))
-      (is (=
-        (bigdec 26.1)
-        (:east extremities)))
-      (is (=
-        (bigdec 26.0)
-        (:west extremities))))))
+      (is (= 44.1M (:north extremities)))
+      (is (= 44.0M (:south extremities)))
+      (is (= 26.1M (:east extremities)))
+      (is (= 26.0M (:west extremities))))))
 
 (deftest test-pitch-size
   (testing "should return correct pitch size"
     (let [extremities (pitch/extreme-points dummy-trkpts)]
-      (is (=
-        (bigdec 0.1)
-        (:width
-          (pitch/pitch-size 
-            extremities))))
-      (is (=
-        (bigdec 0.1)
-        (:height
-          (pitch/pitch-size 
-            extremities)))))))
+      (is (= 0.1M (:width (pitch/pitch-size extremities))))
+      (is (= 0.1M (:height (pitch/pitch-size extremities)))))))
 
 (deftest test-normalize-trkpts
   (testing "should return correct normalized track points"
     (let [normalized (pitch/normalize-trkpts dummy-trkpts)]
-      (is (=
-        (bigdec 0.0)
-        (:latitude (first normalized))))
-      (is (=
-        (bigdec 0.0)
-        (:longitude (first normalized))))
-      (is (=
-        (bigdec 0.1) 
-        (:latitude (second normalized))))
-      (is (=
-        (bigdec 0.1) 
-        (:longitude (nth normalized 3)))))))
+      (is (= 0.0M (:latitude (first normalized))))
+      (is (= 0.0M (:longitude (first normalized))))
+      (is (= 0.1M (:latitude (second normalized))))
+      (is (= 0.1M (:longitude (nth normalized 3)))))))

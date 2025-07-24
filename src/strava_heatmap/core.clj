@@ -4,16 +4,14 @@
     [strava_heatmap.heatmap :as heatmap]
     [strava_heatmap.gpx_parser :as gpx]))
 
-(defn trkpts [file]
+(defn print-trkpts [file]
   (->> file
     gpx/read-file-as-string
-    gpx/xml-to-trkpts))
+    gpx/xml-to-trkpts
+    heatmap/normalize-trkpts
+    heatmap/heatmap-matrix
+    println))
 
-(defn print-gpx [file]
-  (let [trkpts (trkpts file)]
-    (let [extemities (pitch/extreme-points trkpts)]
-      (let [pitch-size (pitch/pitch-size extemities)]
-        (println (heatmap/normalize-trkpts trkpts 100))))))
 
 (defn -main []
-  (print-gpx "resources/square.gpx"))
+  (print-trkpts "resources/square.gpx"))
