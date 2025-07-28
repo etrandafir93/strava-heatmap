@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Heatmap</title>
+  <style>
+    .heatmap {
+      display: grid;
+      grid-template-columns: repeat(100, 10px);
+      gap: 2px;
+    }
+
+    .cell {
+      width: 10px;
+      height: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: white;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<div id="heatmap" class="heatmap"></div>
+
+<script>
+    const heatmap = [{"x":3,"y":15,"color":"rgb(102, 153, 0)"},{"x":0,"y":92,"color":"rgb(0, 255, 0)"},{"x":41,"y":63,"color":"rgb(0, 255, 0)"},{"x":47,"y":33,"color":"rgb(0, 255, 0)"},{"x":46,"y":23,"color":"rgb(51, 204, 0)"},{"x":7,"y":13,"color":"rgb(0, 255, 0)"},{"x":53,"y":25,"color":"rgb(0, 255, 0)"},{"x":94,"y":20,"color":"rgb(0, 255, 0)"},{"x":41,"y":39,"color":"rgb(0, 255, 0)"},{"x":41,"y":41,"color":"rgb(0, 255, 0)"},{"x":4,"y":12,"color":"rgb(0, 255, 0)"},{"x":52,"y":28,"color":"rgb(0, 255, 0)"},{"x":81,"y":49,"color":"rgb(0, 255, 0)"},{"x":44,"y":65,"color":"rgb(0, 255, 0)"},{"x":43,"y":24,"color":"rgb(0, 255, 0)"},{"x":85,"y":89,"color":"rgb(0, 255, 0)"},{"x":95,"y":16,"color":"rgb(0, 255, 0)"},{"x":45,"y":23,"color":"rgb(0, 255, 0)"},{"x":79,"y":96,"color":"rgb(0, 255, 0)"},{"x":58,"y":40,"color":"rgb(0, 255, 0)"},{"x":9,"y":58,"color":"rgb(0, 255, 0)"},{"x":47,"y":34,"color":"rgb(0, 255, 0)"},{"x":41,"y":38,"color":"rgb(0, 255, 0)"},{"x":88,"y":89,"color":"rgb(0, 255, 0)"},{"x":43,"y":23,"color":"rgb(0, 255, 0)"},{"x":82,"y":42,"color":"rgb(102, 153, 0)"},{"x":11,"y":21,"color":"rgb(0, 255, 0)"},{"x":1,"y":15,"color":"rgb(102, 153, 0)"},{"x":7,"y":8,"color":"rgb(0, 255, 0)"},{"x":4,"y":14,"color":"rgb(102, 153, 0)"},{"x":80,"y":89,"color":"rgb(0, 255, 0)"},{"x":91,"y":24,"color":"rgb(0, 255, 0)"},{"x":89,"y":21,"color":"rgb(0, 255, 0)"},{"x":60,"y":32,"color":"rgb(0, 255, 0)"},{"x":19,"y":10,"color":"rgb(0, 255, 0)"},{"x":4,"y":84,"color":"rgb(0, 255, 0)"},{"x":99,"y":15,"color":"rgb(0, 255, 0)"},{"x":92,"y":22,"color":"rgb(0, 255, 0)"},{"x":4,"y":15,"color":"rgb(255, 0, 0)"},{"x":0,"y":14,"color":"rgb(51, 204, 0)"},{"x":3,"y":13,"color":"rgb(102, 153, 0)"},{"x":51,"y":21,"color":"rgb(51, 204, 0)"},{"x":97,"y":17,"color":"rgb(0, 255, 0)"},{"x":25,"y":5,"color":"rgb(0, 255, 0)"},{"x":42,"y":34,"color":"rgb(0, 255, 0)"},{"x":62,"y":22,"color":"rgb(0, 255, 0)"},{"x":87,"y":88,"color":"rgb(0, 255, 0)"},{"x":85,"y":29,"color":"rgb(51, 204, 0)"},{"x":16,"y":13,"color":"rgb(0, 255, 0)"},{"x":86,"y":88,"color":"rgb(0, 255, 0)"},{"x":100,"y":16,"color":"rgb(0, 255, 0)"},{"x":47,"y":24,"color":"rgb(102, 153, 0)"},{"x":51,"y":34,"color":"rgb(0, 255, 0)"},{"x":82,"y":43,"color":"rgb(0, 255, 0)"},{"x":11,"y":56,"color":"rgb(0, 255, 0)"},{"x":89,"y":31,"color":"rgb(0, 255, 0)"},{"x":82,"y":89,"color":"rgb(0, 255, 0)"},{"x":60,"y":19,"color":"rgb(0, 255, 0)"},{"x":51,"y":31,"color":"rgb(0, 255, 0)"},{"x":0,"y":91,"color":"rgb(0, 255, 0)"},{"x":11,"y":19,"color":"rgb(0, 255, 0)"},{"x":2,"y":89,"color":"rgb(0, 255, 0)"},{"x":12,"y":55,"color":"rgb(0, 255, 0)"},{"x":20,"y":8,"color":"rgb(51, 204, 0)"},{"x":46,"y":36,"color":"rgb(0, 255, 0)"},{"x":77,"y":100,"color":"rgb(0, 255, 0)"},{"x":56,"y":27,"color":"rgb(0, 255, 0)"},{"x":54,"y":41,"color":"rgb(0, 255, 0)"},{"x":2,"y":15,"color":"rgb(153, 102, 0)"},{"x":7,"y":9,"color":"rgb(0, 255, 0)"},{"x":23,"y":6,"color":"rgb(0, 255, 0)"},{"x":97,"y":16,"color":"rgb(0, 255, 0)"},{"x":5,"y":9,"color":"rgb(0, 255, 0)"},{"x":83,"y":89,"color":"rgb(0, 255, 0)"},{"x":47,"y":67,"color":"rgb(0, 255, 0)"},{"x":90,"y":28,"color":"rgb(0, 255, 0)"},{"x":1,"y":92,"color":"rgb(0, 255, 0)"},{"x":15,"y":13,"color":"rgb(0, 255, 0)"},{"x":49,"y":22,"color":"rgb(0, 255, 0)"},{"x":41,"y":43,"color":"rgb(0, 255, 0)"},{"x":47,"y":35,"color":"rgb(0, 255, 0)"},{"x":17,"y":11,"color":"rgb(0, 255, 0)"},{"x":3,"y":14,"color":"rgb(51, 204, 0)"},{"x":80,"y":93,"color":"rgb(0, 255, 0)"},{"x":91,"y":23,"color":"rgb(102, 153, 0)"},{"x":54,"y":19,"color":"rgb(0, 255, 0)"},{"x":48,"y":23,"color":"rgb(0, 255, 0)"},{"x":19,"y":8,"color":"rgb(0, 255, 0)"},{"x":1,"y":14,"color":"rgb(0, 255, 0)"},{"x":82,"y":90,"color":"rgb(102, 153, 0)"},{"x":6,"y":10,"color":"rgb(0, 255, 0)"},{"x":88,"y":88,"color":"rgb(51, 204, 0)"},{"x":58,"y":28,"color":"rgb(0, 255, 0)"},{"x":98,"y":15,"color":"rgb(0, 255, 0)"},{"x":93,"y":17,"color":"rgb(0, 255, 0)"},{"x":50,"y":33,"color":"rgb(0, 255, 0)"},{"x":85,"y":30,"color":"rgb(0, 255, 0)"},{"x":46,"y":0,"color":"rgb(0, 255, 0)"},{"x":45,"y":2,"color":"rgb(51, 204, 0)"},{"x":87,"y":90,"color":"rgb(51, 204, 0)"},{"x":63,"y":0,"color":"rgb(0, 255, 0)"},{"x":54,"y":37,"color":"rgb(0, 255, 0)"},{"x":44,"y":0,"color":"rgb(0, 255, 0)"},{"x":3,"y":87,"color":"rgb(0, 255, 0)"},{"x":42,"y":30,"color":"rgb(0, 255, 0)"},{"x":82,"y":96,"color":"rgb(0, 255, 0)"},{"x":46,"y":67,"color":"rgb(0, 255, 0)"},{"x":95,"y":19,"color":"rgb(0, 255, 0)"},{"x":69,"y":2,"color":"rgb(0, 255, 0)"},{"x":82,"y":44,"color":"rgb(0, 255, 0)"},{"x":61,"y":29,"color":"rgb(0, 255, 0)"}];
+
+    const container = document.getElementById('heatmap');
+
+    const height = 100;
+    const width = 100;
+
+    const maxX = Math.max(...heatmap.map(point => point.x));
+    const maxY = Math.max(...heatmap.map(point => point.y));
+    
+    for (let x = 0; x < height; x++) {
+        for (let y = 0; y < width; y++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.style.backgroundColor = getColor(x, y); 
+            container.appendChild(cell);
+        }
+    }
+
+    function getColor(x, y) {
+        const point = heatmap.find(point => point.x === x && point.y === y);
+        return point ? point.color : 'rgb(255, 255, 255)';
+    }
+
+</script>
+
+</body>
+</html>

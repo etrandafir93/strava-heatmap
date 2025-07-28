@@ -1,4 +1,5 @@
 (ns strava_heatmap.core
+  (:import java.util.UUID)
   (:require 
     [strava_heatmap.pitch_finder :as pitch]
     [strava_heatmap.heatmap :as heatmap]  
@@ -18,8 +19,9 @@
     gpx/read-file-as-string
     (pretty-print "step 2: xml string")
     gpx/xml-to-trkpts
+    (filter (fn[pt] (< (:cadence pt) 10)))
     (pretty-print "step 3: track points")
-    heatmap/normalize-trkpts
+    (heatmap/normalize-trkpts)
     (pretty-print "step 4: normalized track points")
     heatmap/heatmap-matrix
     (pretty-print "step 5: heatmap matrix")
@@ -27,11 +29,14 @@
     (pretty-print "step 6: heatmap rgb")
     heatmap/map-to-json
     (pretty-print "step 7: heatmap json")
-    html/generate-html
+    (html/generate-html)
     (pretty-print "step 8: heatmap html")
-    (html/save-file "resources/square.html")
+    (html/save-file (str "out/" (UUID/randomUUID) ".html"))
     (pretty-print "step 9: saving html file")))
 
-
-(defn -main []
-  (print-trkpts "resources/square.gpx"))
+;; clojure -M:run resources/Evening_Run.gpx
+(defn -main [& args]
+  (if (empty? args)
+    (println "No input file provided. Usage: clojure -M:run <gpx-file>")
+    (let [input-file (first args)]    
+      (print-trkpts input-file))))

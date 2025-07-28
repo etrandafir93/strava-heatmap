@@ -1,6 +1,7 @@
 (ns strava_heatmap.heatmap_test
   (:require [clojure.test :refer :all]
-            [strava_heatmap.heatmap :as heatmap]))
+            [strava_heatmap.heatmap :as heatmap]
+            [clojure.string :as str]))
 
 (def min-lon 26.0M)
 (def min-lat 44.0M)
@@ -25,21 +26,21 @@
         eg: max-lon -> 10, max-lat -> 10, min-lon -> 0, min-lat -> 0"
     (is (=
       [{:x 0, :y 0} {:x 10, :y 0} {:x 10, :y 10} {:x 0, :y 10}]
-      (heatmap/normalize-trkpts-precision four-ponits-square 10)))))
+      (heatmap/normalize-trkpts-precision 10 four-ponits-square)))))
 
 (deftest test-heatmap-matrix
   (testing "should return correct heatmap matrix"
     (is (=
       { [0 0] 1, [10 10] 1, [10 0] 1, [0 10] 1 }
       (heatmap/heatmap-matrix 
-        (heatmap/normalize-trkpts-precision four-ponits-square 10))))))
+        (heatmap/normalize-trkpts-precision 10 four-ponits-square))))))
 
 (deftest test-heatmap-matrix
   (testing "should return correct heatmap matrix (prcision = 99)"
     (is (=
       { [0 0] 1, [99 99] 1, [99 0] 1, [0 99] 1 }
       (heatmap/heatmap-matrix 
-        (heatmap/normalize-trkpts-precision four-ponits-square 99))))))
+        (heatmap/normalize-trkpts-precision 99 four-ponits-square))))))
 
 (def seven-ponits
   (conj four-ponits-square 
@@ -47,12 +48,15 @@
     {:longitude min-lon :latitude min-lat}
     {:longitude max-lon :latitude max-lat}))
 
+(defn ignoring-whitespace [s]
+  (str/replace s #"\s+" ""))
+
 (deftest test-heatmap-matrix-overlapping-points
-  (testing "should return correct heatmap matrix (prcision = 99)"
+  (testing "should return correct heatmap matrix (prcision = 10)"
     (is (=
       { [0 0] 3 [10 10] 2, [10 0] 1, [0 10] 1 }
       (heatmap/heatmap-matrix 
-        (heatmap/normalize-trkpts-precision seven-ponits 10))))))
+        (heatmap/normalize-trkpts-precision 10 seven-ponits))))))
 
 (deftest test-heatmap-rgb
   (testing "should return correct heatmap rgb"
@@ -65,9 +69,12 @@
 (deftest test-heatmap-json
   (testing "should return correct heatmap json"
     (is (=
-      "[{\"x\":0,\"y\":0,\"color\":\"rgb(255, 0, 0)\"},
-      {\"x\":10,\"y\":0,\"color\":\"rgb(0, 255, 0)\"}]"
-      (heatmap/map-to-json 
-        { [0 0] "rgb(255, 0, 0)", 
-          [0 10] "rgb(0, 255, 0)" })))))
-
+      (ignoring-whitespace "[
+          {\"x\":0,\"y\":0,\"color\":\"rgb(255, 0, 0)\"},
+          {\"x\":0,\"y\":10,\"color\":\"rgb(0, 255, 0)\"}
+        ]")
+      (ignoring-whitespace (heatmap/map-to-json 
+        { 
+          [0 0] "rgb(255, 0, 0)", 
+          [0 10] "rgb(0, 255, 0)" 
+        }))))))
